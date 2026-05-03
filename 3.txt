@@ -1,0 +1,83 @@
+3.a) Write a C program to remove empty files from the given directory.
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+void remove_empty_files(const char *directory) {
+struct dirent *entry;
+DIR *dp = opendir(directory);
+if (dp == NULL) {
+perror("opendir");
+return;
+}
+while ((entry = readdir(dp)) != NULL) {
+if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+continue;
+}
+char path[1024];
+snprintf(path, sizeof(path), "%s/%s", directory, entry->d_name);
+int fd = open(path, O_RDONLY);
+if (fd == -1) {
+perror("open");
+continue;
+}
+off_t size = lseek(fd, 0, SEEK_END);
+if (size == -1) {
+perror("lseek");
+close(fd);
+continue;
+}
+if (size == 0) {
+if (unlink(path) == 0) {
+printf("Removed empty file: %s\n", path);
+} else {
+perror("unlink");
+}
+}
+}
+closedir(dp);
+}
+int main(int argc,char *argv[]) {
+const char *directory = argv[1];
+remove_empty_files(directory);
+return 0;
+}
+Commands to Execute:
+vi program_name.c
+cc program_name.c
+mkdir demo
+cd demo
+Inside demo directory, create an empty file
+vi t1.txt
+cd .. (come out of the directory)
+./a.out <path_to_your_directory> (Ex. ./a.out /home/Aneesh/demo)
+Output:
+3.b) Write a C program to implement ls –li command which list the files in a specified directory. Your
+program should Print 5 attributes of files.
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <time.h>
+#include<sys/stat.h>
+int main(int argc,char *argv[]){
+struct dirent *d;
+struct stat m;
+DIR *dp=(argc>1) ? argv[1] : ".";
+dp = opendir(dp);
+if(dp){
+while(d = readdir(dp)){
+stat(d->d_name,&m);
+printf("%ld %o %d %d %s %s\n", m.st_ino, m.st_mode, m.st_uid, m.st_gid,
+ctime(&m.st_atime),d->d_name);
+}
+}
+}
+Commands to Execute:
+vi program_name.c (type program here)
+cc program_name.c
+./a.out <path of the directory> [Ex. /home/cs6a16/Downloads ]
