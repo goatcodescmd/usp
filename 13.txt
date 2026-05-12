@@ -1,0 +1,159 @@
+1a
+vi p1a.c
+cc p1a.c
+vi test.txt
+./a.out
+
+1b
+vi p1b.c
+cc p1b.c
+vi test.txt
+./a.out
+
+2a
+vi p2a.c
+cc p2a.c
+vi test.txt
+./a.out
+
+2b
+vi p2b.c
+cc p2b.c
+./a.out
+
+3a
+vi p3a.c
+cc p3a.c
+mkdir testdir
+touch testdir/empty1.txt
+touch testdir/empty2.txt
+vi testdir/data.txt
+./a.out testdir
+
+3b
+vi p3b.c
+cc p3b.c
+mkdir mydir
+touch mydir/a.txt
+touch mydir/b.txt
+./a.out mydir
+
+4a
+vi p4.c
+cc p4.c
+vi file1.txt
+./a.out file1.txt hardlink.txt
+ls -li
+./a.out x file1.txt softlink.txt
+ls -li
+
+4b
+vi p4bechoall.c
+cc p4bechoall.c -o echoall
+vi interp
+chmod +x interp
+vi p4bmain.c
+cc p4bmain.c
+./a.out
+
+5a
+vi p5a.c
+cc p5a.c
+vi source.txt
+vi dest.txt
+./a.out
+ls -l source.txt dest.txt
+
+5b
+vi p5b.c
+cc p5b.c
+./a.out
+
+6a
+vi p6a.c
+cc p6a.c
+vi test.txt
+cat test.txt
+./a.out
+cat test.txt
+
+6b
+vi p6b.c
+cc p6b.c
+vi test.txt
+./a.out
+
+7a
+vi p7a.c
+cc p7a.c
+./a.out
+
+7b
+vi p7b.c
+cc p7b.c
+vi source.txt
+./a.out source.txt dest.txt
+cat dest.txt
+
+8a
+vi p8a.c
+cc p8a.c
+touch file1.txt
+mkdir mydir
+ln -s file1.txt link1
+./a.out file1.txt mydir link1
+
+8b
+vi p8bchild.c
+cc p8bchild.c
+mv a.out child
+vi p8bparent.c
+cc p8bparent.c
+vi example.txt
+./a.out
+
+9a
+vi p9a.c
+cc p9a.c
+./a.out
+ls -l t1.txt
+
+9b
+vi p9b.c
+cc p9b.c
+vi test.txt
+./a.out test.txt
+
+10a
+vi 10a.c
+cc 10a.c
+./a.out
+ps -ef | grep a.out
+
+10b
+vi p10b.c
+cc p10b.c
+./a.out
+
+11a dup
+vi p11adup.c
+cc p11adup.c
+./a.out
+
+11a dup2
+vi p11adup2.c
+cc p11adup2.c
+./a.out
+cat test.txt
+
+11b
+vi p11bchild.c
+cc p11bchild.c -o child
+vi p11bparent.c
+cc p11bparent.c
+./a.out 10 20
+
+12a
+vi p12a.c
+cc p12a.c
+./a.out
